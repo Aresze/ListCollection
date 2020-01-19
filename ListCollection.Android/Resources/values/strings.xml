@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ListCollection.Android</string>
+    <string name="action_settings">Settings</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone</string>
+    <string name="newContact">New contact</string>
+    <string name="noname">noname</string>
+    <string name="nophone">your phone</string>
+</resources>
