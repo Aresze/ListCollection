@@ -62,7 +62,6 @@
   <ItemGroup>
     <Compile Include="ContactInfo.cs" />
     <Compile Include="Helper\EventType.cs" />
-    <Compile Include="Helper\Photo.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Adapter\RecycleViewAdapter.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -155,6 +154,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\avatar_10.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\avatar_default.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

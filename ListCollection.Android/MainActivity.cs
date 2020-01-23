@@ -4,7 +4,7 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using ListCollection.Android.Adapter;
-using ListCollection.Android.Helper;
+using ListCollection.Helper;
 using System;
 
 namespace ListCollection.Android
@@ -15,33 +15,33 @@ namespace ListCollection.Android
         private RecyclerView recycler;
         private RecycleViewAdapter adapter;
         private RecyclerView.LayoutManager layoutManager;
-        NamesAndPhones namesAndPhones;
-        Photo photo;
         Contacts lstContacts;
+        AddUserContacts addUserContacts;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
-            namesAndPhones = new NamesAndPhones();
-            photo = new Photo();
-            lstContacts = new Contacts();
-            
+           
+            addUserContacts = new AddUserContacts();
+            lstContacts = addUserContacts.AddContacts(10);
+
             recycler = FindViewById<RecyclerView>(Resource.Id.recyclerView);
             layoutManager = new LinearLayoutManager(this);
             recycler.SetLayoutManager(layoutManager);
             adapter = new RecycleViewAdapter(lstContacts.getContacts());
             recycler.SetAdapter(adapter);
-            addContacts(10);
+           
 
             var addItem = FindViewById<ImageView>(Resource.Id.addNewContact);
+
             addItem.Click += (sender, e) =>
             {
-                openDialog();
+                openAddDialog();
             };
         }
 
-        void openDialog()
+        void openAddDialog()
         {
             var layoutInflater = LayoutInflater.From(Application.Context);
             var view = layoutInflater.Inflate(Resource.Layout.dialog_addcontact, null);
@@ -56,8 +56,10 @@ namespace ListCollection.Android
             alertDialog.SetTitle("New contact");
             alertDialog.SetButton("New", (s, e) =>
             {
-                adapter.AddItem(position: 1,photo.getRandomPhoto(), name.Text, phone.Text);
-                recycler.SmoothScrollToPosition(0);
+                var position = 0;
+                addUserContacts.AddContact(position, name.Text, phone.Text, "avatar_default");
+                adapter.NotifyItemInserted(position);
+                recycler.SmoothScrollToPosition(position);
             });
 
             alertDialog.SetButton2("Cancel", (s, e) =>
@@ -65,15 +67,6 @@ namespace ListCollection.Android
                 alertDialog.Cancel();
             });
             alertDialog.Show();
-        }
-
-        void addContacts(int count)
-        {
-            for(int i = 0; i < count; i++)
-            {
-                adapter.AddItem(position: lstContacts.contacts.Count, photo.getRandomPhoto(), namesAndPhones.getRandomName(), namesAndPhones.getRandomPhone());
-            }
-            recycler.SmoothScrollToPosition(0);
         }
     }
 }
